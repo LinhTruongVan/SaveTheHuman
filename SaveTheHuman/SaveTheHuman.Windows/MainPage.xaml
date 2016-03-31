@@ -15,7 +15,17 @@
         <x:String x:Key="AppName">Save The Human</x:String>
         <ControlTemplate x:Key="EnemyTemplate" TargetType="ContentControl">
             <Grid>
-                <Ellipse Fill="Red" HorizontalAlignment="Center" Height="100" Stroke="Black" VerticalAlignment="Center" Width="100"/>
+                <Ellipse Fill="Gray" HorizontalAlignment="Center" Height="100" Stroke="Black" VerticalAlignment="Center" Width="75"/>
+                <Ellipse Fill="Black" HorizontalAlignment="Center" Height="35" Margin="40,20,70,0" Stroke="Black" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <CompositeTransform SkewX="10"/>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse Fill="Black" HorizontalAlignment="Center" Height="35" Margin="69.969,21,40.031,0" Stroke="Black" VerticalAlignment="Top" Width="25" RenderTransformOrigin="2.451,0.457" UseLayoutRounding="False" d:LayoutRounding="Auto">
+                    <Ellipse.RenderTransform>
+                        <CompositeTransform SkewX="-10" TranslateX="-0.266"/>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
             </Grid>
         </ControlTemplate>
     </Page.Resources>
@@ -43,7 +53,7 @@
         </Grid.RowDefinitions>
 
         <!-- Back button and page title -->
-        <Grid Grid.ColumnSpan="3">
+        <Grid x:Name="grid" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
@@ -57,21 +67,21 @@
             <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1"
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
         </Grid>
-        <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Center"/>
-        <ProgressBar Grid.Column="1" Grid.Row="2" Height="20"/>
-        <Canvas x:Name="playArea" Grid.Column="1" Margin="0" Grid.Row="1">
+        <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Center" Click="startButton_Click"/>
+        <ProgressBar x:Name="progressBar" Grid.Column="1" Grid.Row="2" Height="20"/>
+        <Canvas x:Name="playArea" Grid.Column="1" Margin="0" Grid.Row="1" PointerMoved="playArea_PointerMoved" PointerExited="playArea_PointerExited">
             <Canvas.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFA640EE" Offset="0.014"/>
                     <GradientStop Color="#FF37E447" Offset="1"/>
                 </LinearGradientBrush>
             </Canvas.Background>
-            <StackPanel Orientation="Vertical" x:Name="human">
+            <StackPanel Orientation="Vertical" x:Name="human" PointerPressed="human_PointerPressed">
                 <Ellipse Fill="White" Height="10" Width="10"/>
                 <Rectangle Fill="White" Height="25" Width="10"/>
             </StackPanel>
             <TextBlock x:Name="gameOverText" Canvas.Left="300" TextWrapping="Wrap" Text="Game Over" Canvas.Top="160" FontFamily="Arial Black" FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.172,0.125"/>
-            <Rectangle Height="50" Canvas.Left="737.053" Canvas.Top="98.916" Width="50" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
+            <Rectangle x:Name="target" Height="50" Canvas.Left="737.053" Canvas.Top="98.916" Width="50" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" PointerEntered="target_PointerEntered">
                 <Rectangle.RenderTransform>
                     <CompositeTransform Rotation="45"/>
                 </Rectangle.RenderTransform>
